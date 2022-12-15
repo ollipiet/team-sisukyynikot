@@ -17,10 +17,6 @@ jobs:
         uses: actions/setup-node@v3.5.1
         with:
           node-version: 18.12.1
-          
-      - name: npm install
-        run: |
-          npm install
 
       - name: Coveralls
         uses: coverallsapp/github-action@master
