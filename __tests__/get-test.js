@@ -13,7 +13,7 @@ describe("function get", () => {
         const undefinedVal = undefined;
         expect(get(object2, ['a','0','b','c'], undefinedVal)).not.toEqual(undefined);
     });
-    it("should return return default, if value is not found", () => {
+    it("should return default, if value is not found", () => {
         // test if you get default value from object, with undefined resolved values
         const object2 = { 'a': [{ 'b': { 'c': 0 } }] };
         const undefinedVal = undefined;
