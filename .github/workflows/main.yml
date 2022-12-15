@@ -14,14 +14,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-    
-      - name: debug
-        run: pwd && ls -lAh && cd .. && ls -lAh
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v3.5.1
         with:
           node-version: 18.12.1
+
+      - name: Install dependencies
+        run: npm install
 
       - name: Run tests
         run: npm run test
