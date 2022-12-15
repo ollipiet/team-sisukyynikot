@@ -18,6 +18,9 @@ jobs:
         with:
           node-version: 18.12.1
 
+      - name: Run tests
+        run: npm run test
+
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
