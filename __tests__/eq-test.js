@@ -1,6 +1,6 @@
 import eq from "./../src/eq.js";
 
-describe("Eq", () => {
+describe("eq", () => {
   const object = { a: 1 };
 
   const values = [
