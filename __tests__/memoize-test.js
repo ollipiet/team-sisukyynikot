@@ -46,20 +46,24 @@ describe("memoize", () => {
     expect(nObj.value).toEqual('a');
   });
 
-  // Should be modified through memoize cache, exposes and takes a hasher
+  // Test upperStrFunc
   it(`check exposed memoized cache, equals transformed strings`, () =>{
     expect(upperStrFunc('foo')).toEqual('FOO');
   });
   it(`check exposed memoized cache, equals transformed strings`, () =>{
     expect(upperStrFunc('plus')).toEqual('PLUS');
   });
-  // Modify cache
-  upperStrFunc.cache = {foo: 'PLUS', plus: 'FOO'};
 
+
+  // Should be modified through memoize cache, exposes and alters memoized value from cache.set
   it(`check exposed memoized equals cached (altered) strings`, () =>{
+    // Modify cache
+    upperStrFunc.cache.set('foo', 'PLUS');
     expect(upperStrFunc('foo')).toEqual('PLUS');
   });
   it(`check exposed memoized equals cached (altered) strings`, () =>{
+    // Modify cache
+    upperStrFunc.cache.set('plus', 'FOO');
     expect(upperStrFunc('plus')).toEqual('FOO');
   });
 
