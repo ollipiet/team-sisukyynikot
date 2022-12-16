@@ -1,6 +1,19 @@
 import memoize from "./../src/memoize.js";
 
 describe("memoize", () => {
+  // Hash functions, for test, used to swizzle the key in function 
+  const objectCacher = memoize(function(value, key) {
+      return {key: key, value: value};
+  }, function(value, key) {
+      return key;
+  });
+
+  const nObj = objectCacher('a', 'alpha');
+  const nObjAlias = objectCacher('b', 'alpha');
+
+  // use memoization
+  let upperStrFunc = memoize((s) => s.toUpperCase());
+
   it("should work like in the docstring", () => {
     const object = { a: 1, b: 2 };
     const other = { c: 3, d: 4 };
@@ -22,17 +35,32 @@ describe("memoize", () => {
     });
     expect(fib(15)).toEqual(610);
   });
-  // Should be able to be changed later
+  // should use hash function to shake down the key 
+  it(`object is created if second argument is used as key `, () => {
+    expect(nObj).not.toEqual(void 0);
+  });
+  it(`object is cached if second argument is used as key`, () => {
+    expect(nObj).toEqual(nObjAlias);
+  });
+  it(`object is not altered if second argument is used as key`, () => {
+    expect(nObj.value).toEqual('a');
+  });
 
-  // Should be modified through memoize.cache weakmap
+  // Should be modified through memoize cache, exposes and takes a hasher
+  it(`check exposed memoized cache, equals transformed strings`, () =>{
+    expect(upperStrFunc('foo')).toEqual('FOO');
+  });
+  it(`check exposed memoized cache, equals transformed strings`, () =>{
+    expect(upperStrFunc('plus')).toEqual('PLUS');
+  });
+  // Modify cache
+  upperStrFunc.cache = {foo: 'PLUS', plus: 'FOO'};
 
-  // more...
-  /* it("should have right properties", () => {
-        let a = "fooz ";
-        const fn = ( a ) => a+"a";
+  it(`check exposed memoized equals cached (altered) strings`, () =>{
+    expect(upperStrFunc('foo')).toEqual('PLUS');
+  });
+  it(`check exposed memoized equals cached (altered) strings`, () =>{
+    expect(upperStrFunc('plus')).toEqual('FOO');
+  });
 
-        //dummy
-        expect(memoized()).toBe(fn.foo);
-
-    }) */
 });
