@@ -14,4 +14,18 @@ describe("function toString", () => {
     it("converts values in a list to correct string", () => {
         expect(toString([1,2,3])).toEqual('1,2,3');
     })
+
+    it("converts numbers to correct string", () => {
+        expect(toString(500)).toEqual('500');
+    })
+
+    it("converts hexadesimal numbers to correct string", () => {
+        expect(toString(0x00)).toEqual('0');
+    })
+    it("converts string to correct string", () => {
+        expect(toString('1\\2')).toEqual('1\\2');
+    })
+    it("converts decimal number to correct string", () => {
+        expect(toString(1.23)).toEqual('1.23');
+    })
 });
