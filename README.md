@@ -1,4 +1,5 @@
 # Student template
+[![Coverage Status](https://coveralls.io/repos/github/ollipiet/team-sisukyynikot/badge.svg?branch=main)](https://coveralls.io/github/ollipiet/team-sisukyynikot?branch=main)
 
 ## Purpose of this repository
 

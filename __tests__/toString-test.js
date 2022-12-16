@@ -1,31 +1,28 @@
 import toString from "./../src/toString.js";
 
-describe("function toString", () => {
-
-    // Test if toString converts null to nothing
-    it("should ..", () => {
-        expect(toString(null)).toEqual('');
+describe("toString", () => {
+  const values = [
+    { input: null, output: "" },
+    { input: -0, output: "-0" },
+    { input: [1, 2, 3], output: "1,2,3" },
+  ];
+  for (const { input, output } of values) {
+    it(`toString(${input}) should be "${output}" like in docstring`, () => {
+      expect(toString(input)).toEqual(output);
     });
+  }
 
-    it("converts values like -1 and -0 to correct value", () => {
-        expect(toString(-0)).toEqual('-0');
+  const valuesCustom = [
+    { input: [500] , output: "500"},
+    { input: 0x00, output: "0"},
+    { input: "1\\2", output: "1\\2"},
+    { input: "1.23", output: "1.23"}
+  ]
+
+  for (const {input, output } of valuesCustom ) {
+    it(`toString(${input}) should be "${output} to ensure interoperatibility of primitive data types`, () => {
+      expect(toString(input)).toEqual(output);
     });
+  }
 
-    it("converts values in a list to correct string", () => {
-        expect(toString([1,2,3])).toEqual('1,2,3');
-    })
-
-    it("converts numbers to correct string", () => {
-        expect(toString(500)).toEqual('500');
-    })
-
-    it("converts hexadesimal numbers to correct string", () => {
-        expect(toString(0x00)).toEqual('0');
-    })
-    it("converts string to correct string", () => {
-        expect(toString('1\\2')).toEqual('1\\2');
-    })
-    it("converts decimal number to correct string", () => {
-        expect(toString(1.23)).toEqual('1.23');
-    })
 });

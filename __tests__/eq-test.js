@@ -1,22 +1,22 @@
 import eq from "./../src/eq.js";
 
-describe("function eq", () => {
-    it("should be same, then pass", () => {
-        const object = "foo";
-        const other = "foo";
+describe("eq", () => {
+  const object = { a: 1 };
 
-        expect(object).toEqual(other);
-    });
-    it("should not pass, when unequal", () => {
-        const foo = "foo";
-        const bar = "bar";
+  const values = [
+    { input: [object, object], output: true },
+    { input: [object, { a: 1 }], output: false },
+    { input: ["a", "a"], output: true },
+    { input: ["a", Object("a")], output: false },
+    { input: [NaN, NaN], output: true },
+  ];
 
-        expect(foo).not.toEqual(bar);
+  for (const {
+    input: [first, second],
+    output,
+  } of values) {
+    it(`eq(${first}, ${second}) should be ${output} like in docstring`, () => {
+      expect(eq(first, second)).toBe(output);
     });
-    it("should be truthy with NaN values", () => {
-        const NoValue = NaN;
-        const NoValue2 = NaN;
-
-        expect(NoValue).toEqual(NoValue2);
-    });
+  }
 });
