@@ -38,6 +38,18 @@ describe("slice", () => {
       args: [10, 20],
       output: [],
     },
+    {
+      args: [null, 20],
+      output: ["a", "b", "c", "d"],
+    },
+    {
+      args: [-5],
+      output: ["a", "b", "c", "d"],
+    },
+    {
+      args: [3, 1],
+      output: [],
+    },
   ];
   for (const { args, output } of customTestCases) {
     const inputString = customArray + ", " + args.join(", ");
@@ -45,4 +57,8 @@ describe("slice", () => {
       expect(slice(customArray, ...args)).toEqual(output);
     });
   }
+
+  it("should give an empty array if input array is null", () => {
+    expect(slice(null, 2)).toEqual([]);
+  });
 });

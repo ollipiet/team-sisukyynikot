@@ -1,4 +1,4 @@
-import memoize from "./../src/memoize.js";
+import memoize from "./../src/memoize";
 
 describe("memoize", () => {
   it("should work like in the docstring", () => {
@@ -63,5 +63,12 @@ describe("memoize", () => {
     const other = "Something completely different";
     cachedCapitalizer.cache.set("a", other);
     expect(cachedCapitalizer("a")).toEqual(other);
+  });
+
+  it("should throw an exception if the primary function is not a function", () => {
+    expect(() => memoize("asdf")).toThrow(TypeError);
+  });
+  it("should throw an exception if the resolver is not a function", () => {
+    expect(() => memoize((val) => val, "asdf")).toThrow(TypeError);
   });
 });

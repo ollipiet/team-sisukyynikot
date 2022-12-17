@@ -1,4 +1,4 @@
-import words from "./../src/words.js";
+import words from "./../src/words";
 
 describe("words", () => {
   const docstringTestCases = [
@@ -29,9 +29,43 @@ describe("words", () => {
       input: ["`lev, Macshû, rn & Hø"],
       output: ["lev", "Macshû", "rn", "Hø"],
     },
+    {
+      caseName: "should work with ascii characters",
+      input: ["Supercalifragilisticexpialidocious"],
+      output: ["Supercalifragilisticexpialidocious"],
+    },
+    {
+      input: ["a"],
+      output: ["a"],
+    },
+    {
+      input: ["ä"],
+      output: ["ä"],
+    },
+    {
+      caseName: "should give an empty array for empty string",
+      input: [""],
+      output: [],
+    },
+    {
+      caseName: "should give an empty array for a string with a single space",
+      input: [" "],
+      output: [],
+    },
+    {
+      caseName: "should work with a custom pattern",
+      input: ["word", /\w/g],
+      output: ["w", "o", "r", "d"],
+    },
+    {
+      caseName: "should give an empty array when custom pattern whiffs",
+      input: ["word", /\d/g],
+      output: [],
+    },
   ];
-  for (const { input, output } of customTestCases) {
-    it(`to handle international words, data types and short names: "${output}" [input: toString(${input})]`, () => {
+  for (const { input, output, caseName } of customTestCases) {
+    const defaultCaseName = `to handle international words, data types and short names: "${output}" [input: toString(${input})]`;
+    it(caseName || defaultCaseName, () => {
       expect(words(...input)).toEqual(output);
     });
   }

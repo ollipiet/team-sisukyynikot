@@ -13,4 +13,9 @@ describe("difference", () => {
     expect(difference([1, 2, 2], [2])).toEqual([1]);
     expect(difference([1, 2, 2], [1, 2])).toEqual([]);
   });
+
+  it("should return an empty array for non-arraylikes", () => {
+    expect(difference("asdf", "a")).toEqual([]);
+    expect(difference(1)).toEqual([]);
+  });
 });

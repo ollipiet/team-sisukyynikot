@@ -1,4 +1,4 @@
-import eq from "./../src/eq.js";
+import eq from "./../src/eq";
 
 describe("eq", () => {
   const object = { a: 1 };

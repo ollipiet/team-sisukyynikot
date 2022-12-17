@@ -1,4 +1,5 @@
 import map from "./../src/map";
+
 describe("map", () => {
   const array = [4, 8];
   const output = [16, 64];
@@ -14,6 +15,11 @@ describe("map", () => {
     {
       caseName: "should work with an empty list",
       array: [],
+      output: [],
+    },
+    {
+      caseName: "should work with a null array",
+      array: null,
       output: [],
     },
     {

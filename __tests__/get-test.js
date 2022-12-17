@@ -1,4 +1,4 @@
-import get from "./../src/get.js";
+import get from "./../src/get";
 
 describe("get", () => {
   const docstringObject = { a: [{ b: { c: 3 } }] };
@@ -58,6 +58,12 @@ describe("get", () => {
       caseName:
         "does not crash when fetching property access on nested non-objects",
       object: { x: null },
+      inputPath: ["p", "q"],
+      output: undefined,
+    },
+    {
+      caseName: "should return undefined if object is null",
+      object: null,
       inputPath: ["p", "q"],
       output: undefined,
     },
