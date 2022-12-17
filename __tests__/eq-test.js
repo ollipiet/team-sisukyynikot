@@ -3,7 +3,7 @@ import eq from "./../src/eq.js";
 describe("eq", () => {
   const object = { a: 1 };
 
-  const values = [
+  const docstringTestCases = [
     { input: [object, object], output: true },
     { input: [object, { a: 1 }], output: false },
     { input: ["a", "a"], output: true },
@@ -14,7 +14,7 @@ describe("eq", () => {
   for (const {
     input: [first, second],
     output,
-  } of values) {
+  } of docstringTestCases) {
     it(`eq(${first}, ${second}) should be ${output} like in docstring`, () => {
       expect(eq(first, second)).toBe(output);
     });

@@ -1,19 +1,6 @@
 import memoize from "./../src/memoize.js";
 
 describe("memoize", () => {
-  // Hash functions, for test, used to swizzle the key in function 
-  const objectCacher = memoize(function(value, key) {
-      return {key: key, value: value};
-  }, function(value, key) {
-      return key;
-  });
-
-  const nObj = objectCacher('a', 'alpha');
-  const nObjAlias = objectCacher('b', 'alpha');
-
-  // use memoization
-  let upperStrFunc = memoize((s) => s.toUpperCase());
-
   it("should work like in the docstring", () => {
     const object = { a: 1, b: 2 };
     const other = { c: 3, d: 4 };
@@ -29,42 +16,52 @@ describe("memoize", () => {
     expect(values(object)).toEqual(["a", "b"]);
   });
 
-  it("should return an expected value when passed a function", () => {
+  it("should use the cache", () => {
+    let fibsCalculated = 0;
     const fib = memoize(function (n) {
+      fibsCalculated += 1;
       return n < 2 ? n : fib(n - 1) + fib(n - 2);
     });
     expect(fib(15)).toEqual(610);
-  });
-  // should use hash function to shake down the key 
-  it(`object is created if second argument is used as key `, () => {
-    expect(nObj).not.toEqual(void 0);
-  });
-  it(`object is cached if second argument is used as key`, () => {
-    expect(nObj).toEqual(nObjAlias);
-  });
-  it(`object is not altered if second argument is used as key`, () => {
-    expect(nObj.value).toEqual('a');
+    expect(fibsCalculated).toEqual(16);
+
+    // Test that value is fetched from cache and not recalculated
+    expect(fib(15)).toEqual(610);
+    expect(fibsCalculated).toEqual(16);
   });
 
-  // Test upperStrFunc
-  it(`check exposed memoized cache, equals transformed strings`, () =>{
-    expect(upperStrFunc('foo')).toEqual('FOO');
-  });
-  it(`check exposed memoized cache, equals transformed strings`, () =>{
-    expect(upperStrFunc('plus')).toEqual('PLUS');
+  it("should resolve cache keys correctly", () => {
+    const objectCacher = memoize(
+      function (key, value) {
+        return { key, value };
+      },
+      function (key, value) {
+        return key;
+      }
+    );
+
+    // Object is created if second argument is used as key
+    const initialObject = objectCacher("key", "a");
+    expect(initialObject.key).toEqual("key");
+    expect(initialObject.value).toEqual("a");
+
+    // Resolver only cares about the key, so
+    // even if value is different, the same object should be returned
+    expect(initialObject).toBe(objectCacher("key", "b"));
+
+    // Object is not altered by the previous operation
+    expect(initialObject.value).toEqual("a");
   });
 
+  it("should allow direct cache modifications", () => {
+    let cachedCapitalizer = memoize((s) => s.toUpperCase());
+    // Check exposed memoized cache, equals transformed strings
+    expect(cachedCapitalizer("a")).toEqual("A");
+    expect(cachedCapitalizer("b")).toEqual("B");
 
-  // Should be modified through memoize cache, exposes and alters memoized value from cache.set
-  it(`check exposed memoized equals cached (altered) strings`, () =>{
     // Modify cache
-    upperStrFunc.cache.set('foo', 'PLUS');
-    expect(upperStrFunc('foo')).toEqual('PLUS');
+    const other = "Something completely different";
+    cachedCapitalizer.cache.set("a", other);
+    expect(cachedCapitalizer("a")).toEqual(other);
   });
-  it(`check exposed memoized equals cached (altered) strings`, () =>{
-    // Modify cache
-    upperStrFunc.cache.set('plus', 'FOO');
-    expect(upperStrFunc('plus')).toEqual('FOO');
-  });
-
 });

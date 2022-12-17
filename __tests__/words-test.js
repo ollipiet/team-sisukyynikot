@@ -1,7 +1,7 @@
 import words from "./../src/words.js";
 
 describe("words", () => {
-  const values = [
+  const docstringTestCases = [
     {
       input: ["fred, barney, & pebbles"],
       output: ["fred", "barney", "pebbles"],
@@ -11,18 +11,8 @@ describe("words", () => {
       output: ["fred", "barney", "&", "pebbles"],
     },
   ];
-  const valuesDataMix = [
-    {
-      input: ['Mari, undefined, null & Infinity'],
-      output: ['Mari', 'undefined', 'null', 'Infinity']
-    },
-    {
-      input: ['`lev, Macshû, rn & Hø'],  
-      output: ['lev', 'Macshû', 'rn', 'Hø']
-    }
-  ];
 
-  for (const { input, output } of values) {
+  for (const { input, output } of docstringTestCases) {
     const inputString = input.map((element) => `"${element}"`).join(", ");
 
     it(`words(${inputString}) should be ${output} like in docstring`, () => {
@@ -30,10 +20,19 @@ describe("words", () => {
     });
   }
 
-  for (const { input, output } of valuesDataMix) {
+  const customTestCases = [
+    {
+      input: ["Mari, undefined, null & Infinity"],
+      output: ["Mari", "undefined", "null", "Infinity"],
+    },
+    {
+      input: ["`lev, Macshû, rn & Hø"],
+      output: ["lev", "Macshû", "rn", "Hø"],
+    },
+  ];
+  for (const { input, output } of customTestCases) {
     it(`to handle international words, data types and short names: "${output}" [input: toString(${input})]`, () => {
       expect(words(...input)).toEqual(output);
     });
   }
-
 });
