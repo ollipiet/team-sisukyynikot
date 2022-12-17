@@ -12,4 +12,13 @@ describe("defaultTo", () => {
       expect(defaultTo(value, fallback)).toBe(output);
     });
   }
+
+  const safeDefault = "Safe default value";
+  // Many of these are acceptable, but NaN doesn't default like it says in the docstring
+  const falsyValues = [undefined, null, NaN, 0, false, [], {}, ""];
+  for (const value of falsyValues) {
+    it(`should default from ${new String(value)}`, () => {
+      expect(defaultTo(value, safeDefault)).toBe(safeDefault);
+    });
+  }
 });

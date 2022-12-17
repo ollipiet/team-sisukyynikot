@@ -12,4 +12,8 @@ describe("isBuffer", () => {
       expect(isBuffer(eval(input))).toBe(output);
     });
   }
+
+  it("should work for new buffer type", () => {
+    expect(isBuffer(Buffer.alloc(2))).toBe(true);
+  });
 });

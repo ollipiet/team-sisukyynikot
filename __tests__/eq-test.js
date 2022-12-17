@@ -11,12 +11,44 @@ describe("eq", () => {
     { input: [NaN, NaN], output: true },
   ];
 
-  for (const {
-    input: [first, second],
-    output,
-  } of docstringTestCases) {
-    it(`eq(${first}, ${second}) should be ${output} like in docstring`, () => {
-      expect(eq(first, second)).toBe(output);
+  for (const { input, output } of docstringTestCases) {
+    const inputStr = input.map((value) => new String(value)).join(", ");
+
+    it(`eq(${inputStr}) should be ${output} like in docstring`, () => {
+      expect(eq(...input)).toBe(output);
+    });
+  }
+
+  // Tests all eq pairs between falsy types
+  const falsyValues = [undefined, null, NaN, 0, false, [], {}, ""];
+
+  const customTestCases = falsyValues.flatMap((value, index) => {
+    return falsyValues.flatMap((otherValue, otherIndex) => {
+      const output = index === otherIndex; // They should only equal themselves
+      const inputs = output
+        ? [[value, otherValue]]
+        : [
+            [value, otherValue],
+            [otherValue, value],
+          ];
+
+      return inputs.map((input) => {
+        const inputStr = input
+          .map((value) => new String(value) || value.toString())
+          .join(", ");
+
+        return {
+          caseName: `eq(${inputStr}) should be ${output}`,
+          input,
+          output,
+        };
+      });
+    });
+  });
+
+  for (const { input, output, caseName } of customTestCases) {
+    it(caseName, () => {
+      expect(eq(...input)).toBe(output);
     });
   }
 });

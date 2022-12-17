@@ -7,4 +7,10 @@ describe("difference", () => {
   it(`difference(${first}, ${second}) should be ${output} like in docstring`, () => {
     expect(difference(first, second)).toEqual(output);
   });
+
+  it("should handle duplication", () => {
+    expect(difference([1, 2, 2], [1])).toEqual([2, 2]);
+    expect(difference([1, 2, 2], [2])).toEqual([1]);
+    expect(difference([1, 2, 2], [1, 2])).toEqual([]);
+  });
 });
