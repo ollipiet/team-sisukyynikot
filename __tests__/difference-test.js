@@ -17,5 +17,10 @@ describe("difference", () => {
   it("should return an empty array for non-arraylikes", () => {
     expect(difference("asdf", "a")).toEqual([]);
     expect(difference(1)).toEqual([]);
+    expect(difference({ 1: 2, 3: 4 })).toEqual([]);
+  });
+
+  it("should allow multiple filters", () => {
+    expect(difference([1, 2, 3], [0, 1], [3, 4])).toEqual([2]);
   });
 });

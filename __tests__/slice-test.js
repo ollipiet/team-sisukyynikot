@@ -50,6 +50,10 @@ describe("slice", () => {
       args: [3, 1],
       output: [],
     },
+    {
+      args: [-3, -1],
+      output: ["b", "c"],
+    },
   ];
   for (const { args, output } of customTestCases) {
     const inputString = customArray + ", " + args.join(", ");

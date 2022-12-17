@@ -67,6 +67,12 @@ describe("get", () => {
       inputPath: ["p", "q"],
       output: undefined,
     },
+    {
+      caseName: "should return undefined if object is null",
+      object: customObject,
+      inputPath: null,
+      output: undefined,
+    },
   ];
 
   for (const { object, inputPath, def, output, caseName } of customTestCases) {

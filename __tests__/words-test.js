@@ -1,4 +1,5 @@
 import words from "./../src/words";
+import asciiWords from "./../src/words";
 
 describe("words", () => {
   const docstringTestCases = [
@@ -69,4 +70,8 @@ describe("words", () => {
       expect(words(...input)).toEqual(output);
     });
   }
+
+  it("should only recognize ascii words with asciiWords", () => {
+    expect(asciiWords("ääää")).toEqual("");
+  });
 });
