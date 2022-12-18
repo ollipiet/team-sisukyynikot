@@ -23,7 +23,7 @@ describe("toString", () => {
     { input: ["start", null, "end"], output: "start,,end" },
   ];
   for (const { input, output } of primitiveTestCases) {
-    it(`to ensure interoperatibility of primitive data types should be converted: "${output}" [input: toString(${input.toString()}]`, () => {
+    it(`to ensure interoperatibility of primitive data types should be converted: "${output}" [input: toString(${input.toString()})]`, () => {
       expect(toString(input)).toEqual(output);
     });
   }
